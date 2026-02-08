@@ -1,0 +1,6 @@
+openai
+python-dotenv
+google-genai
+rich
+imagehash
+Pillow
