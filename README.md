@@ -210,5 +210,25 @@ agent = VideoAnalysisAgent(
 - `VIDEO_ANALYSIS` -- sends full video chunks to Gemini (with fallback to frames if uncertain)
 - `FRAME_ANALYSIS` -- extracts frames and sends to OpenAI directly
 
-## Future Optimization
-TODO
+## Future optimizations
+
+Thoughts on making TVA production-ready:
+
+**Tighter timestamp alignment** -- Currently, video segments are clipped using
+planner-level timestamps, which leads to a lot of dead frames (nothing
+happening on screen). Syncing timestamps directly with the `browser_agent`
+instead of the planner would let us capture the exact moment each action occurs,
+producing shorter and more relevant chunks.
+
+**Frame analysis as the default strategy** -- `VIDEO_ANALYSIS` is the current
+default because it handles edge cases better (e.g., actions at the very end of a
+chunk). However, with tighter timestamp alignment (above), `FRAME_ANALYSIS`
+becomes viable as the primary mode -- it's cheaper (no Gemini cost), faster
+(smaller payloads), and gives the LLM discrete snapshots to reason over rather
+than a full video stream.
+
+**Real-time validation** -- TVA currently runs as a post-hoc pass after the
+entire test completes. A more powerful approach: run it as a background agent
+that validates task *i-1* while task *i* is being executed. This turns
+validation from a batch report into a live safety net that can flag deviations
+as they happen.
