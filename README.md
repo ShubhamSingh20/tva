@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/tva_logo.png" alt="TVA Logo" width="200">
+  <img src="assets/tva_logo.png" alt="TVA Logo" width="300">
 </p>
 
 # TestZeus Validation Agent (TVA)
