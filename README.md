@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/tva_logo.png" alt="TVA Logo" width="200">
+</p>
+
 # TestZeus Validation Agent (TVA)
 
 Validates whether automated browser agents actually performed the tasks they
@@ -74,7 +78,7 @@ the agent's own claims.
 
 ```bash
 # 1. Clone and install
-git clone <repo-url> && cd testzeus-validation-agent
+git clone <repo-url> && cd tva
 pip install -r requirements.txt
 
 # 2. Set up API keys
@@ -84,6 +88,7 @@ cp .env.example .env
 # 3. Place test inputs
 #    inputs/<test_name>/agent_inner_logs.json
 #    inputs/<test_name>/test_video.webm
+#    inputs/<test_name>/results.xml
 
 # 4. Run
 python -m tva <test_name>
@@ -180,20 +185,7 @@ any deviations found. This is printed in a coloured panel on the terminal
 
 Results are persisted as JSON and JUnit-style XML.
 
-## Architecture
 
-```
-tva/
-    __init__.py       # Public API exports
-    __main__.py       # CLI entry point + pipeline orchestration
-    agent.py          # VideoAnalysisAgent -- core analysis + comparison
-    llm.py            # LLM abstractions (OpenAI, Gemini)
-    models.py         # Task, AgentInput, enums
-    prompts.py        # All LLM prompt templates
-    transcoding.py    # MediaTranscoder -- ffmpeg operations
-    tui.py            # Rich console helpers
-    utils.py          # JSON/XML loaders
-```
 
 ## Configuration
 
@@ -211,9 +203,12 @@ from tva import VideoAnalysisAgent, AnalyzeStrategy
 
 agent = VideoAnalysisAgent(
     agent_input,
-    analyze_strategy=AnalyzeStrategy.FRAME_ANALYSIS,
+    analyze_strategy=AnalyzeStrategy.VIDEO_ANALYSIS,
 )
 ```
 
 - `VIDEO_ANALYSIS` -- sends full video chunks to Gemini (with fallback to frames if uncertain)
 - `FRAME_ANALYSIS` -- extracts frames and sends to OpenAI directly
+
+## Future Optimization
+TODO

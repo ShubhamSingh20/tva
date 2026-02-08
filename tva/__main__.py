@@ -8,6 +8,7 @@ Usage:
     python -m tva <test_name>
 """
 import os
+import shutil
 import sys
 from dotenv import load_dotenv
 from rich.panel import Panel
@@ -187,7 +188,20 @@ def run_validation(agent: VideoAnalysisAgent) -> list[Task]:
 
 
 
+def _check_ffmpeg() -> None:
+    """Ensure ffmpeg and ffprobe are available on PATH."""
+    for cmd in ("ffmpeg", "ffprobe"):
+        if shutil.which(cmd) is None:
+            console.print(
+                f"[bold red]Error:[/] [bold]{cmd}[/] not found on PATH.\n"
+                f"  Install ffmpeg: https://ffmpeg.org/download.html"
+            )
+            sys.exit(1)
+
+
 def main():
+    _check_ffmpeg()
+
     if len(sys.argv) < 2:
         console.print("Usage: python -m tva <test_name>")
         available = ", ".join(os.listdir(INPUTS_DIR)) if os.path.isdir(INPUTS_DIR) else "none"
