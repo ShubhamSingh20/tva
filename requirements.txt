@@ -4,3 +4,4 @@ google-genai
 rich
 imagehash
 Pillow
+tenacity

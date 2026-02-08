@@ -1,7 +1,6 @@
 import xml.etree.ElementTree as ET
 from typing import Dict, Any, List
 import json
-from .tui import console
 
 def xml_element_to_dict(element: ET.Element) -> Dict[str, Any]:
     """Recursively convert an XML ElementTree element to a dictionary."""
@@ -53,11 +52,3 @@ def load_json(json_path: str) -> Dict[str, Any]:
     with open(json_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-def load_as_json(content: str) -> Dict[str, Any]:
-    """Load a JSON string and return it as a dictionary."""
-    content = content.strip('```json\n').strip('\n```').strip()
-    try:
-        return json.loads(content)
-    except json.JSONDecodeError:
-        console.print(f"[bold red]Failed to parse JSON:[/] {content}")
-        return None

@@ -230,7 +230,7 @@ def main():
 
     agent = VideoAnalysisAgent(
         agent_input, 
-        analyze_strategy=AnalyzeStrategy.FRAME_ANALYSIS
+        analyze_strategy=AnalyzeStrategy.VIDEO_ANALYSIS
     )
     run_validation(agent)
 

@@ -10,7 +10,7 @@ You need to return a JSON object with the following fields:
 Example:
 {{
     "is_passed": "yes",
-    "reasoning": "Agent clicked on the dropdown menu and selected the 'Profile' option post which agent was successfully redirected to the profile page, as stated in the task.",
+    "reasoning": "Agent clicked on the dropdown menu and selected the 'Profile' option post which agent was successfully redirected to the profile page, as stated in the task."
 }}
 """
 
@@ -33,7 +33,7 @@ You MUST return a JSON object with exactly these fields:
 Example:
 {{
     "is_passed": "yes",
-    "reasoning": "Frame 1 shows the homepage. By frame 3 the search bar is visible with 'Rainbow sweater' typed in. Frame 5 shows search results loading. The task was performed.",
+    "reasoning": "Frame 1 shows the homepage. By frame 3 the search bar is visible with 'Rainbow sweater' typed in. Frame 5 shows search results loading. The task was performed."
 }}
 """
 
@@ -67,6 +67,6 @@ Return a JSON object with:
 Example:
 {{
     "is_passed": "yes",
-    "reasoning": "Both sources confirm the search bar was opened and text was entered. No contradictions found.",
+    "reasoning": "Both sources confirm the search bar was opened and text was entered. No contradictions found."
 }}
 """

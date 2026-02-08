@@ -11,7 +11,7 @@ from .prompts import (
     SUMMARY_PROMPT,
 )
 from .tui import console, step, step_error
-from .utils import load_json, load_xml_as_dict, load_as_json
+from .utils import load_json, load_xml_as_dict
 
 __all__ = [
     # Models
@@ -39,5 +39,4 @@ __all__ = [
     # Utils
     "load_json",
     "load_xml_as_dict",
-    "load_as_json",
 ]

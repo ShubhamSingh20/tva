@@ -227,6 +227,14 @@ becomes viable as the primary mode -- it's cheaper (no Gemini cost), faster
 (smaller payloads), and gives the LLM discrete snapshots to reason over rather
 than a full video stream.
 
+**Consistent viewport size during capture** -- In non-headless mode the browser
+window resizes arbitrarily during certain actions (dropdown opens, modal pops
+up, scroll triggers a layout shift). This produces frames at varying
+resolutions, which hurts both perceptual hashing (frames look "different" when
+they're just resized) and LLM analysis quality (the model sees inconsistent
+layouts). Locking the viewport to a fixed size during recording would produce
+cleaner, more comparable frames and significantly improve analysis accuracy.
+
 **Real-time validation** -- TVA currently runs as a post-hoc pass after the
 entire test completes. A more powerful approach: run it as a background agent
 that validates task *i-1* while task *i* is being executed. This turns

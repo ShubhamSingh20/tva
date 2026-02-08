@@ -7,7 +7,6 @@ from .transcoding import MediaTranscoder
 from .llm import GeminiLLM, OpenAILLM
 from .models import AgentInput, Task, AnalyzeStrategy, LLMAnalysis
 from .prompts import VIDEO_ANALYSIS_PROMPT, FRAME_ANALYSIS_PROMPT, COMPARISON_PROMPT, SUMMARY_PROMPT
-from .utils import load_as_json
 
 class VideoAnalysisAgent:
     def __init__(self, agent_input: AgentInput, analyze_strategy: AnalyzeStrategy = AnalyzeStrategy.VIDEO_ANALYSIS):
@@ -36,10 +35,9 @@ class VideoAnalysisAgent:
         the task's llm_* fields in-place.
         """
         prompt = f"USER TASK: {task.action}"
-        response = self.gemini_llm.generate_response(
-            prompt, VIDEO_ANALYSIS_PROMPT, [chunk_path],
+        result = self.gemini_llm.generate_response(
+            prompt, VIDEO_ANALYSIS_PROMPT, [chunk_path], response_json=True,
         )
-        result = load_as_json(response)
         is_passed = result.get("is_passed", None)
 
         if is_passed is None:
@@ -61,10 +59,9 @@ class VideoAnalysisAgent:
             return
 
         prompt = f"USER TASK: {task.action}"
-        response = self.openai_llm.generate_response(
-            prompt, FRAME_ANALYSIS_PROMPT, frame_paths,
+        result = self.openai_llm.generate_response(
+            prompt, FRAME_ANALYSIS_PROMPT, frame_paths, response_json=True,
         )
-        result = load_as_json(response)
         is_passed = result.get("is_passed", None)
 
         if is_passed is None:
@@ -108,8 +105,9 @@ class VideoAnalysisAgent:
             f"VIDEO VALIDATION REASONING: {task.llm_reasoning}\n\n"
             f"USER AGENT RESPONSE: {task.user_agent_response}"
         )
-        response = self.openai_llm.generate_response(prompt, COMPARISON_PROMPT)
-        result = load_as_json(response)
+        result = self.openai_llm.generate_response(
+            prompt, COMPARISON_PROMPT, response_json=True,
+        )
         is_passed = result.get("is_passed", None)
 
         if is_passed is None:
